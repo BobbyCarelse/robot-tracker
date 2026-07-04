@@ -4,7 +4,6 @@ import { validationSchema } from "./validation";
 import { CardinalDirection } from "../../constants/app";
 import { calculateCoordinates } from "../../utils/DirectionUtil";
 import { storeEdgePoint } from "../../utils/EdgeUtil";
-import { useState } from "react";
 
 type InitialValues = {
   x: number;
