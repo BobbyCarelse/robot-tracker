@@ -1,6 +1,6 @@
 import { type CardinalDirection, directions } from "../constants/app";
 
-export const isStepValidate = (step: string) => {
+export const isStepValid = (step: string) => {
   let matches = false;
 
   directions.forEach((direction) => {
@@ -24,7 +24,7 @@ export const calculateCoordinates = (
   let robotFellOff = false;
 
   for (const character of instruction) {
-    if (!isStepValidate(character))
+    if (!isStepValid(character))
       throw new Error("Invalid instructions provided");
     if (currentY > 25 || currentY < -25) {
       robotFellOff = true;
