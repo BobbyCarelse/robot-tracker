@@ -58,8 +58,10 @@ export const calculateCoordinates = (
       nextX < 0 || nextX > gridWidth || nextY < 0 || nextY > gridHeight;
 
     if (isOffGrid) {
+      const departureX = currentX;
+      const departureY = currentY;
       const hasScent = scentPoints.some(
-        (point) => point.x === currentX && point.y === currentY,
+        (point) => point.x === departureX && point.y === departureY,
       );
 
       if (hasScent) continue;
