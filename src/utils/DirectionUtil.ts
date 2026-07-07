@@ -37,27 +37,39 @@ export const calculateCoordinates = (
 
   let robotFellOff = false;
 
-  const halfGridWidth = gridWidth / 2
-  const halfGridHeight = gridHeight / 2
-
   for (const character of instruction) {
     if (!isStepValid(character))
       throw new Error("Invalid instructions provided");
-    if (currentY > halfGridHeight || currentY < -halfGridHeight) {
-      robotFellOff = true;
-    }
-    if (currentX > halfGridWidth || currentX < -halfGridWidth) {
-      robotFellOff = true;
-    }
 
-    if (robotFellOff) {
-      return { robotFellOff, x: currentX, y: currentY, currentStep };
     if (character === "L" || character === "R") {
       currentStep = turn(currentStep, character);
       continue;
     }
 
+    let nextX = currentX;
+    let nextY = currentY;
+
+    if (currentStep === "N") nextY += 1;
+    else if (currentStep === "S") nextY -= 1;
+    else if (currentStep === "E") nextX += 1;
+    else if (currentStep === "W") nextX -= 1;
+
+    const isOffGrid =
+      nextX < 0 || nextX > gridWidth || nextY < 0 || nextY > gridHeight;
+
+    if (isOffGrid) {
+      const hasScent = scentPoints.some(
+        (point) => point.x === currentX && point.y === currentY,
+      );
+
+      if (hasScent) continue;
+
+      robotFellOff = true;
+      break;
     }
+
+    currentX = nextX;
+    currentY = nextY;
   }
 
   return { robotFellOff, x: currentX, y: currentY, currentStep };
