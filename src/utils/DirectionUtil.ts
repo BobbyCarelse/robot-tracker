@@ -11,6 +11,16 @@ export const isStepValid = (step: string) => {
   return matches;
 };
 
+const clockwiseDirections: CardinalDirection[] = ["N", "E", "S", "W"];
+
+const turn = (
+  current: CardinalDirection,
+  instruction: "L" | "R",
+): CardinalDirection => {
+  const index = clockwiseDirections.indexOf(current);
+  const offset = instruction === "R" ? 1 : 3;
+  return clockwiseDirections[(index + offset) % 4];
+};
 export const calculateCoordinates = (
   x: number,
   y: number,
