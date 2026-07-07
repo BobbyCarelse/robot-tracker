@@ -21,13 +21,15 @@ const turn = (
   const offset = instruction === "R" ? 1 : 3;
   return clockwiseDirections[(index + offset) % 4];
 };
+
 export const calculateCoordinates = (
   x: number,
   y: number,
   direction: CardinalDirection,
   instruction: string,
   gridWidth: number,
-  gridHeight: number
+  gridHeight: number,
+  scentPoints: { x: number; y: number }[] = [],
 ) => {
   let currentStep = direction;
   let currentX = x;
