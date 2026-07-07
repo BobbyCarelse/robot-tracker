@@ -52,40 +52,11 @@ export const calculateCoordinates = (
 
     if (robotFellOff) {
       return { robotFellOff, x: currentX, y: currentY, currentStep };
+    if (character === "L" || character === "R") {
+      currentStep = turn(currentStep, character);
+      continue;
     }
 
-    if (currentStep === "E") {
-      if (character === "F") {
-        currentX = currentX + 1;
-      } else if (character === "L") {
-        currentStep = "N";
-      } else if (character === "R") {
-        currentStep = "S";
-      }
-    } else if (currentStep === "N") {
-      if (character === "F") {
-        currentY = currentY + 1;
-      } else if (character === "R") {
-        currentStep = "E";
-      } else if (character === "L") {
-        currentStep = "W";
-      }
-    } else if (currentStep === "W") {
-      if (character === "F") {
-        currentX = currentX - 1;
-      } else if (character === "R") {
-        currentStep = "N";
-      } else if (character === "L") {
-        currentStep = "S";
-      }
-    } else if (currentStep === "S") {
-      if (character === "F") {
-        currentY = currentY - 1;
-      } else if (character === "R") {
-        currentStep = "W";
-      } else if (character === "L") {
-        currentStep = "E";
-      }
     }
   }
 
