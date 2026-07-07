@@ -15,4 +15,6 @@ export const validationSchema = yup.object().shape({
     .string()
     .max(100, "You have exceeded the limit for instructions")
     .required("Please enter a step of instructions"),
+  gridWidth: yup.number().required("Please provide a grid Width"),
+  gridHeight: yup.number().required("Please provide a grid Height"),
 });

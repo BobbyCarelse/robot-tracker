@@ -11,11 +11,25 @@ export const isStepValid = (step: string) => {
   return matches;
 };
 
+const clockwiseDirections: CardinalDirection[] = ["N", "E", "S", "W"];
+
+const turn = (
+  current: CardinalDirection,
+  instruction: "L" | "R",
+): CardinalDirection => {
+  const index = clockwiseDirections.indexOf(current);
+  const offset = instruction === "R" ? 1 : 3;
+  return clockwiseDirections[(index + offset) % 4];
+};
+
 export const calculateCoordinates = (
   x: number,
   y: number,
   direction: CardinalDirection,
   instruction: string,
+  gridWidth: number,
+  gridHeight: number,
+  scentPoints: { x: number; y: number }[] = [],
 ) => {
   let currentStep = direction;
   let currentX = x;
@@ -26,50 +40,36 @@ export const calculateCoordinates = (
   for (const character of instruction) {
     if (!isStepValid(character))
       throw new Error("Invalid instructions provided");
-    if (currentY > 25 || currentY < -25) {
-      robotFellOff = true;
-    }
-    if (currentX > 25 || currentX < -25) {
-      robotFellOff = true;
+
+    if (character === "L" || character === "R") {
+      currentStep = turn(currentStep, character);
+      continue;
     }
 
-    if (robotFellOff) {
-      return { robotFellOff, x: currentX, y: currentY, currentStep };
+    let nextX = currentX;
+    let nextY = currentY;
+
+    if (currentStep === "N") nextY += 1;
+    else if (currentStep === "S") nextY -= 1;
+    else if (currentStep === "E") nextX += 1;
+    else if (currentStep === "W") nextX -= 1;
+
+    const isOffGrid =
+      nextX < 0 || nextX > gridWidth || nextY < 0 || nextY > gridHeight;
+
+    if (isOffGrid) {
+      const hasScent = scentPoints.some(
+        (point) => point.x === currentX && point.y === currentY,
+      );
+
+      if (hasScent) continue;
+
+      robotFellOff = true;
+      break;
     }
 
-    if (currentStep === "E") {
-      if (character === "F") {
-        currentX = currentX + 1;
-      } else if (character === "L") {
-        currentStep = "N";
-      } else if (character === "R") {
-        currentStep = "S";
-      }
-    } else if (currentStep === "N") {
-      if (character === "F") {
-        currentY = currentY + 1;
-      } else if (character === "R") {
-        currentStep = "E";
-      } else if (character === "L") {
-        currentStep = "W";
-      }
-    } else if (currentStep === "W") {
-      if (character === "F") {
-        currentX = currentX - 1;
-      } else if (character === "R") {
-        currentStep = "N";
-      } else if (character === "L") {
-        currentStep = "S";
-      }
-    } else if (currentStep === "S") {
-      if (character === "F") {
-        currentY = currentY - 1;
-      } else if (character === "R") {
-        currentStep = "W";
-      } else if (character === "L") {
-        currentStep = "E";
-      }
-    }
+    currentX = nextX;
+    currentY = nextY;
   }
 
   return { robotFellOff, x: currentX, y: currentY, currentStep };
