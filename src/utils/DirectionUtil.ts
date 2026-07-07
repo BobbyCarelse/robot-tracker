@@ -16,6 +16,8 @@ export const calculateCoordinates = (
   y: number,
   direction: CardinalDirection,
   instruction: string,
+  gridWidth: number,
+  gridHeight: number
 ) => {
   let currentStep = direction;
   let currentX = x;
@@ -23,13 +25,16 @@ export const calculateCoordinates = (
 
   let robotFellOff = false;
 
+  const halfGridWidth = gridWidth / 2
+  const halfGridHeight = gridHeight / 2
+
   for (const character of instruction) {
     if (!isStepValid(character))
       throw new Error("Invalid instructions provided");
-    if (currentY > 25 || currentY < -25) {
+    if (currentY > halfGridHeight || currentY < -halfGridHeight) {
       robotFellOff = true;
     }
-    if (currentX > 25 || currentX < -25) {
+    if (currentX > halfGridWidth || currentX < -halfGridWidth) {
       robotFellOff = true;
     }
 
