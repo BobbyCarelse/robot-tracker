@@ -22,7 +22,7 @@ describe('DirectionUtil', () => {
 
     describe('calculateCoordinates', () => {
         it('should calculate and return robots coords', () => {
-            const response = calculateCoordinates(3, 2, 'N', 'FRRFLLFFRRFLL')
+            const response = calculateCoordinates(3, 2, 'N', 'FRRFLLFFRRFLL', 5, 3)
 
             expect(response).toStrictEqual({robotFellOff: false, x: 3, y: 3, currentStep: 'N'})
         })
