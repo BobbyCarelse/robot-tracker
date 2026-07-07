@@ -3,7 +3,7 @@ import { Button, Input } from "../../primitives";
 import { validationSchema } from "./validation";
 import { CardinalDirection } from "../../constants/app";
 import { calculateCoordinates } from "../../utils/DirectionUtil";
-import { storeEdgePoint } from "../../utils/EdgeUtil";
+import { getEdgePointsStorage, storeEdgePoint } from "../../utils/EdgeUtil";
 
 type InitialValues = {
   x: number;
@@ -16,13 +16,16 @@ type InitialValues = {
 
 export const InstructionSection = () => {
   const onSubmit = (values: InitialValues) => {
+    const scentPoints = getEdgePointsStorage();
+
     const response = calculateCoordinates(
       values.x,
       values.y,
       values.startingOrientation || "N",
       values.instructions,
       values.gridWidth,
-      values.gridHeight
+      values.gridHeight,
+      scentPoints,
     );
 
     if (response?.robotFellOff) {
