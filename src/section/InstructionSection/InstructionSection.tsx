@@ -56,8 +56,8 @@ export const InstructionSection = () => {
       {({ handleSubmit }) => (
         <div>
           <div style={{ display: "flex", gap: 24 }}>
-            <Input name="gridWidth" label="Grid Width" type="number" />
-            <Input name="gridHeight" label="Grid Height" type="number" />
+            <Input name="gridWidth" label="Grid Width" type="number" disabled/>
+            <Input name="gridHeight" label="Grid Height" type="number" disabled/>
           </div>
           <div style={{ display: "flex", gap: 24 }}>
             <Input name="x" label="X Coordinates" type="number" max={50} />
