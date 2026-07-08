@@ -1,7 +1,7 @@
 const EDGE_STORAGE_KEY = "EDGE_OF_WORLD";
 
 export const getEdgePointsStorage = () => {
-  let store = localStorage.getItem(EDGE_STORAGE_KEY);
+  let store = sessionStorage.getItem(EDGE_STORAGE_KEY);
 
   let arrayOfData: { x: number; y: number }[] = [];
 
@@ -17,7 +17,7 @@ export const getEdgePointsStorage = () => {
 export const storeEdgePoint = (x: number, y: number) => {
   const storage = getEdgePointsStorage();
 
-  localStorage.setItem(
+  sessionStorage.setItem(
     EDGE_STORAGE_KEY,
     JSON.stringify([...storage, { x, y }]),
   );
