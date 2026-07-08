@@ -3,7 +3,7 @@ import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 
 interface InputProps extends Pick<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  "type" | "max" | "placeholder" | "maxLength"
+  "type" | "max" | "placeholder" | "maxLength" | 'disabled'
 > {
   testID?: string;
   name: string;
